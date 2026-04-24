@@ -9,49 +9,57 @@ import { SectionHeader } from '@/src/components/ui/SectionHeader';
 import { useAuth } from '@/src/providers/auth-provider';
 import { theme } from '@/src/theme';
 
+function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
 export default function LoginScreen() {
   const { isConfigured, signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const isFormIncomplete = !email.trim() || !password;
 
   const handleEmailChange = (value: string) => {
     setEmail(value);
+    setEmailError(null);
     setError(null);
     setSuccess(null);
   };
 
   const handlePasswordChange = (value: string) => {
     setPassword(value);
+    setPasswordError(null);
     setError(null);
     setSuccess(null);
   };
 
-  const getValidationMessage = () => {
-    if (!email.trim() && !password) {
-      return 'Email ve sifre alanlarini doldurun.';
-    }
+  const handleLogin = async () => {
+    let hasError = false;
 
     if (!email.trim()) {
-      return 'Email alanini doldurun.';
+      setEmailError('Email alanini doldurun.');
+      hasError = true;
+    } else if (!isValidEmail(email)) {
+      setEmailError('Gecerli bir email adresi girin.');
+      hasError = true;
+    } else {
+      setEmailError(null);
     }
 
     if (!password) {
-      return 'Sifre alanini doldurun.';
+      setPasswordError('Sifre alanini doldurun.');
+      hasError = true;
+    } else {
+      setPasswordError(null);
     }
 
-    return null;
-  };
-
-  const handleLogin = async () => {
-    const validationMessage = getValidationMessage();
-
-    if (validationMessage) {
+    if (hasError) {
+      setError(null);
       setSuccess(null);
-      setError(validationMessage);
       return;
     }
 
@@ -90,6 +98,7 @@ export default function LoginScreen() {
           onChangeText={handleEmailChange}
           placeholder="ornek@email.com"
           value={email}
+          error={emailError ?? undefined}
         />
         <Input
           autoCapitalize="none"
@@ -98,13 +107,14 @@ export default function LoginScreen() {
           placeholder="Sifrenizi girin"
           secureTextEntry
           value={password}
+          error={passwordError ?? undefined}
         />
 
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
         {success ? <Text style={styles.successText}>{success}</Text> : null}
 
         <Button
-          disabled={!isConfigured || isFormIncomplete}
+          disabled={!isConfigured || isSubmitting}
           loading={isSubmitting}
           onPress={handleLogin}
           style={styles.button}
