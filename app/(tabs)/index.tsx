@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
+import { Button } from '@/src/components/ui/Button';
 import { ScreenContainer } from '@/src/components/ui/ScreenContainer';
 import { SectionHeader } from '@/src/components/ui/SectionHeader';
 import { useAuth } from '@/src/providers/auth-provider';
@@ -25,25 +26,28 @@ export default function HomeScreen() {
     <ScreenContainer contentContainerStyle={styles.container}>
       <SectionHeader
         style={styles.header}
-        subtitle="Hesabınızla ilişkili temel başlangıç alanı burada yer alır."
+        subtitle="Uygulamaya giriş yaptınız. Siber güvenlik farkındalığını artırmak için hazırsınız."
         title="Ana Sayfa"
       />
 
-      <View style={styles.content}>
-        <Text style={styles.description}>
-          Giris yapmis kullanici alani icin sade baslangic ekrani.
-        </Text>
-        <Text style={styles.metaText}>{user?.email ?? 'Email bilgisi yok'}</Text>
-        {isSubmitting ? <Text style={styles.metaText}>Cikis yapiliyor...</Text> : null}
-        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>Aktif Oturum</Text>
+        <Text style={styles.cardLabel}>Email</Text>
+        <Text style={styles.cardValue}>{user?.email ?? 'Email bilgisi yok'}</Text>
       </View>
 
-      <Pressable
-        disabled={isSubmitting}
-        onPress={handleSignOut}
-        style={({ pressed }) => [styles.button, (pressed || isSubmitting) && styles.buttonPressed]}>
-        <Text style={styles.buttonText}>{isSubmitting ? 'Bekleyin...' : 'Cikis Yap'}</Text>
-      </Pressable>
+      <View style={styles.footer}>
+        {isSubmitting ? <Text style={styles.metaText}>Cikis yapiliyor...</Text> : null}
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+        <Button
+          disabled={isSubmitting}
+          loading={isSubmitting}
+          onPress={handleSignOut}
+          style={styles.button}
+          text="Cikis Yap"
+        />
+      </View>
     </ScreenContainer>
   );
 }
@@ -57,15 +61,33 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: theme.spacing.lg,
   },
-  content: {
-    gap: theme.spacing.md,
+  card: {
+    backgroundColor: theme.colors.surface,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    padding: theme.spacing.lg,
+    gap: theme.spacing.sm,
   },
-  description: {
-    color: theme.colors.textSecondary,
+  cardTitle: {
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.sm,
+    ...theme.typography.subtitle,
+  },
+  cardLabel: {
+    color: theme.colors.textTertiary,
+    ...theme.typography.caption,
+  },
+  cardValue: {
+    color: theme.colors.textPrimary,
     ...theme.typography.body,
   },
+  footer: {
+    marginTop: theme.spacing.xl,
+    gap: theme.spacing.md,
+  },
   metaText: {
-    color: theme.colors.textPrimary,
+    color: theme.colors.textSecondary,
     ...theme.typography.caption,
   },
   errorText: {
@@ -73,18 +95,6 @@ const styles = StyleSheet.create({
     ...theme.typography.caption,
   },
   button: {
-    marginTop: theme.spacing.xl,
-    minHeight: 52,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.primary,
-  },
-  buttonPressed: {
-    opacity: 0.85,
-  },
-  buttonText: {
-    color: theme.colors.surface,
-    ...theme.typography.button,
+    marginTop: theme.spacing.sm,
   },
 });
