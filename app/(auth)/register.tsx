@@ -93,7 +93,7 @@ export default function RegisterScreen() {
         title="Kayıt Ol"
       />
 
-      <View style={styles.form}>
+      <View style={styles.card}>
         {!isConfigured ? (
           <Text style={styles.errorText}>Supabase ortam degiskenleri eksik.</Text>
         ) : null}
@@ -145,8 +145,13 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: theme.spacing.lg,
   },
-  form: {
-    gap: theme.spacing.lg,
+  card: {
+    backgroundColor: theme.colors.surface,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    padding: theme.spacing.lg,
+    gap: theme.spacing.md,
   },
   errorText: {
     color: theme.colors.error,
@@ -157,7 +162,7 @@ const styles = StyleSheet.create({
     ...theme.typography.caption,
   },
   button: {
-    marginTop: theme.spacing.xl,
+    marginTop: theme.spacing.sm,
   },
   link: {
     marginTop: theme.spacing.lg,
