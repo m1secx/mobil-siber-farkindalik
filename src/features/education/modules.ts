@@ -7,6 +7,11 @@ export const educationModules: EducationModule[] = [
     description: 'Sahte mesajları ve kandırmaya çalışan bağlantıları fark etmeyi öğrenin.',
     durationMinutes: 5,
     difficulty: 'beginner',
+    video: {
+      title: 'Phishing E-postaları Nasıl Anlaşılır?',
+      youtubeVideoId: 'dQw4w9WgXcQ',
+      description: 'Oltalama e-postalarında gönderen adresi, aciliyet dili ve sahte bağlantı işaretlerini kısa bir örnek üzerinden anlatan öğretici video.',
+    },
     contentSections: [
       {
         id: 'phishing-awareness-signs',
@@ -272,3 +277,7 @@ export const educationModules: EducationModule[] = [
     ],
   },
 ];
+
+export function getEducationModuleById(moduleId: string) {
+  return educationModules.find((module) => module.id === moduleId);
+}

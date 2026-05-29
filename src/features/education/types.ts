@@ -25,6 +25,37 @@ export type EducationModule = {
   description: string;
   durationMinutes: number;
   difficulty: ModuleDifficulty;
+  video?: {
+    title: string;
+    youtubeVideoId?: string;
+    youtubeUrl?: string;
+    description: string;
+  };
   contentSections: EducationContentSection[];
   quizQuestions: QuizQuestion[];
+};
+
+export type QuizReviewItem = {
+  questionId: string;
+  questionText: string;
+  selectedOptionId: string | null;
+  selectedOptionText: string;
+  correctOptionId: string;
+  correctOptionText: string;
+  isCorrect: boolean;
+  isAnswered: boolean;
+  explanation?: string;
+};
+
+export type QuizReviewSummary = {
+  totalQuestions: number;
+  correctCount: number;
+  wrongCount: number;
+  unansweredCount: number;
+  scorePercent: number;
+};
+
+export type QuizReviewResult = {
+  items: QuizReviewItem[];
+  summary: QuizReviewSummary;
 };

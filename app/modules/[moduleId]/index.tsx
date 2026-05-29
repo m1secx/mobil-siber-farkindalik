@@ -5,7 +5,8 @@ import { Button } from '@/src/components/ui/Button';
 import { Card } from '@/src/components/ui/Card';
 import { ScreenContainer } from '@/src/components/ui/ScreenContainer';
 import { SectionHeader } from '@/src/components/ui/SectionHeader';
-import { educationModules } from '@/src/features/education/modules';
+import { getEducationModuleById } from '@/src/features/education';
+import { getScenarioByModuleId } from '@/src/features/scenarios';
 import { theme } from '@/src/theme';
 
 const difficultyLabels = {
@@ -17,7 +18,8 @@ export default function ModuleDetailScreen() {
   const router = useRouter();
   const { moduleId } = useLocalSearchParams<{ moduleId?: string | string[] }>();
   const normalizedModuleId = Array.isArray(moduleId) ? moduleId[0] : moduleId;
-  const module = educationModules.find((item) => item.id === normalizedModuleId);
+  const module = normalizedModuleId ? getEducationModuleById(normalizedModuleId) : undefined;
+  const scenario = normalizedModuleId ? getScenarioByModuleId(normalizedModuleId) : undefined;
 
   if (!module) {
     return (
@@ -70,6 +72,14 @@ export default function ModuleDetailScreen() {
         </View>
       </Card>
 
+      {module.video ? (
+        <Card style={styles.card}>
+          <Text style={styles.cardTitle}>{module.video.title}</Text>
+          <Text style={styles.bodyText}>{module.video.description}</Text>
+          <Text style={styles.noteText}>Video içeriği yakında uygulama içinde gösterilecek.</Text>
+        </Card>
+      ) : null}
+
       <View style={styles.sections}>
         {module.contentSections.map((section) => (
           <Card key={section.id} style={styles.card}>
@@ -78,6 +88,14 @@ export default function ModuleDetailScreen() {
           </Card>
         ))}
       </View>
+
+      {scenario ? (
+        <Button
+          onPress={() => router.push(`/modules/${module.id}/scenario` as Href)}
+          style={styles.button}
+          text="Senaryoyu Başlat"
+        />
+      ) : null}
 
       <Button
         onPress={() => router.push(`/modules/${module.id}/quiz` as Href)}
@@ -130,6 +148,10 @@ const styles = StyleSheet.create({
   bodyText: {
     color: theme.colors.textSecondary,
     ...theme.typography.body,
+  },
+  noteText: {
+    color: theme.colors.textTertiary,
+    ...theme.typography.caption,
   },
   button: {
     marginTop: theme.spacing.xl,
