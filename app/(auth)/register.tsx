@@ -32,15 +32,15 @@ export default function RegisterScreen() {
 
   const getValidationMessage = () => {
     if (!email.trim() && !password) {
-      return 'Email ve sifre alanlarini doldurun.';
+      return 'Email ve şifre alanlarını doldurun.';
     }
 
     if (!email.trim()) {
-      return 'Email alanini doldurun.';
+      return 'Email alanını doldurun.';
     }
 
     if (!password) {
-      return 'Sifre alanini doldurun.';
+      return 'Şifre alanını doldurun.';
     }
 
     return null;
@@ -67,7 +67,7 @@ export default function RegisterScreen() {
       setEmail('');
       setPassword('');
       setSuccess(
-        'Kayit basarili. Email dogrulamasi aciksa gelen kutunuzu kontrol edin, degilse giris yapabilirsiniz.'
+        'Kayıt başarılı. Email doğrulaması açıksa gelen kutunuzu kontrol edin, değilse giriş yapabilirsiniz.'
       );
     }
 
@@ -78,13 +78,13 @@ export default function RegisterScreen() {
     <ScreenContainer contentContainerStyle={styles.container}>
       <SectionHeader
         style={styles.header}
-        subtitle="Email ve sifre ile yeni bir hesap olusturarak uygulamayi kullanmaya baslayin."
+        subtitle="Email ve şifre ile yeni bir hesap oluşturarak uygulamayı kullanmaya başlayın."
         title="Kayıt Ol"
       />
 
       <View style={styles.form}>
         {!isConfigured ? (
-          <Text style={styles.errorText}>Supabase ortam degiskenleri eksik.</Text>
+          <Text style={styles.errorText}>Supabase ortam değişkenleri eksik.</Text>
         ) : null}
 
         <Input
@@ -97,9 +97,9 @@ export default function RegisterScreen() {
         />
         <Input
           autoCapitalize="none"
-          label="Sifre"
+          label="Şifre"
           onChangeText={handlePasswordChange}
-          placeholder="Sifrenizi olusturun"
+          placeholder="Şifrenizi oluşturun"
           secureTextEntry
           value={password}
         />
@@ -112,12 +112,12 @@ export default function RegisterScreen() {
           loading={isSubmitting}
           onPress={handleRegister}
           style={styles.button}
-          text="Kayit Ol"
+          text="Kayıt Ol"
         />
       </View>
 
       <Link href={'/login' as Href} style={styles.link}>
-        Hesabin var mi? Giris yap
+        Hesabın var mı? Giriş yap
       </Link>
     </ScreenContainer>
   );

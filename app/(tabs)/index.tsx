@@ -31,10 +31,10 @@ export default function HomeScreen() {
 
       <View style={styles.content}>
         <Text style={styles.description}>
-          Giris yapmis kullanici alani icin sade baslangic ekrani.
+          Giriş yapmış kullanıcı alanı için sade başlangıç ekranı.
         </Text>
         <Text style={styles.metaText}>{user?.email ?? 'Email bilgisi yok'}</Text>
-        {isSubmitting ? <Text style={styles.metaText}>Cikis yapiliyor...</Text> : null}
+        {isSubmitting ? <Text style={styles.metaText}>Çıkış yapılıyor...</Text> : null}
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
       </View>
 
@@ -42,7 +42,7 @@ export default function HomeScreen() {
         disabled={isSubmitting}
         onPress={handleSignOut}
         style={({ pressed }) => [styles.button, (pressed || isSubmitting) && styles.buttonPressed]}>
-        <Text style={styles.buttonText}>{isSubmitting ? 'Bekleyin...' : 'Cikis Yap'}</Text>
+        <Text style={styles.buttonText}>{isSubmitting ? 'Bekleyin...' : 'Çıkış Yap'}</Text>
       </Pressable>
     </ScreenContainer>
   );

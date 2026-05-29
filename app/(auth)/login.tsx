@@ -32,15 +32,15 @@ export default function LoginScreen() {
 
   const getValidationMessage = () => {
     if (!email.trim() && !password) {
-      return 'Email ve sifre alanlarini doldurun.';
+      return 'Email ve şifre alanlarını doldurun.';
     }
 
     if (!email.trim()) {
-      return 'Email alanini doldurun.';
+      return 'Email alanını doldurun.';
     }
 
     if (!password) {
-      return 'Sifre alanini doldurun.';
+      return 'Şifre alanını doldurun.';
     }
 
     return null;
@@ -64,7 +64,7 @@ export default function LoginScreen() {
     if (nextError) {
       setError(nextError);
     } else {
-      setSuccess('Giris basarili. Yonlendiriliyorsunuz...');
+      setSuccess('Giriş başarılı. Yönlendiriliyorsunuz...');
     }
 
     setIsSubmitting(false);
@@ -74,13 +74,13 @@ export default function LoginScreen() {
     <ScreenContainer contentContainerStyle={styles.container}>
       <SectionHeader
         style={styles.header}
-        subtitle="Email ve sifrenizle hesabınıza güvenli şekilde giriş yapın."
+        subtitle="Email ve şifrenizle hesabınıza güvenli şekilde giriş yapın."
         title="Giriş Yap"
       />
 
       <View style={styles.form}>
         {isConfigured ? null : (
-          <Text style={styles.errorText}>Supabase ortam degiskenleri eksik.</Text>
+          <Text style={styles.errorText}>Supabase ortam değişkenleri eksik.</Text>
         )}
 
         <Input
@@ -93,9 +93,9 @@ export default function LoginScreen() {
         />
         <Input
           autoCapitalize="none"
-          label="Sifre"
+          label="Şifre"
           onChangeText={handlePasswordChange}
-          placeholder="Sifrenizi girin"
+          placeholder="Şifrenizi girin"
           secureTextEntry
           value={password}
         />
@@ -108,12 +108,12 @@ export default function LoginScreen() {
           loading={isSubmitting}
           onPress={handleLogin}
           style={styles.button}
-          text="Giris Yap"
+          text="Giriş Yap"
         />
       </View>
 
       <Link href={'/register' as Href} style={styles.link}>
-        Hesabin yok mu? Kayit ol
+        Hesabın yok mu? Kayıt ol
       </Link>
     </ScreenContainer>
   );
