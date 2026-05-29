@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Card } from '@/src/components/ui/Card';
 import { ScreenContainer } from '@/src/components/ui/ScreenContainer';
 import { SectionHeader } from '@/src/components/ui/SectionHeader';
-import { educationModules } from '@/src/features/education/modules';
+import { educationModules } from '@/src/features/education';
 import { theme } from '@/src/theme';
 
 const difficultyLabels = {

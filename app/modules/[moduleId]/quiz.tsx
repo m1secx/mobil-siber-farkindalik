@@ -6,14 +6,14 @@ import { Button } from '@/src/components/ui/Button';
 import { Card } from '@/src/components/ui/Card';
 import { ScreenContainer } from '@/src/components/ui/ScreenContainer';
 import { SectionHeader } from '@/src/components/ui/SectionHeader';
-import { educationModules } from '@/src/features/education/modules';
+import { getEducationModuleById, serializeQuizAnswers } from '@/src/features/education';
 import { theme } from '@/src/theme';
 
 export default function ModuleQuizScreen() {
   const router = useRouter();
   const { moduleId } = useLocalSearchParams<{ moduleId?: string | string[] }>();
   const normalizedModuleId = Array.isArray(moduleId) ? moduleId[0] : moduleId;
-  const module = educationModules.find((item) => item.id === normalizedModuleId);
+  const module = normalizedModuleId ? getEducationModuleById(normalizedModuleId) : undefined;
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
@@ -65,8 +65,11 @@ export default function ModuleQuizScreen() {
       const score = module.quizQuestions.reduce((total, question) => {
         return total + (nextAnswers[question.id] === question.correctOptionId ? 1 : 0);
       }, 0);
+      const serializedAnswers = serializeQuizAnswers(nextAnswers);
 
-      router.push(`/modules/${module.id}/result?score=${score}&total=${totalQuestions}` as Href);
+      router.push(
+        `/modules/${module.id}/result?score=${score}&total=${totalQuestions}&answers=${serializedAnswers}` as Href
+      );
       return;
     }
 
