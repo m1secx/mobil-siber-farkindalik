@@ -35,11 +35,12 @@ Kullanıcıların phishing, parola güvenliği, sosyal mühendislik, güvenli ba
 - Gereksiz kütüphane ekleme
 
 ## Çalışma Şekli
-- Önce kısa plan çıkar
-- Sonra uygulanacak dosyaları listele
-- Sonra değişiklikleri yap
-- Her görev sonunda doğrulama adımlarını yaz
+- Riskli veya çok dosyalı işlerde önce kısa plan çıkar
+- Küçük ve net görevlerde doğrudan uygula
+- Yalnızca dokunulacak dosyaları oku ve değiştir
+- Repo genelini gereksiz yere tarama
 - Büyük ve dağınık değişikliklerden kaçın
+- İş sonunda kısa özet, değişen dosyalar ve test sonucunu yaz
 
 ## Güncel Durum Notu
 - Güncel sprint durumu ve sıradaki en küçük adım için `docs/current-state.md` dosyasını referans al.
