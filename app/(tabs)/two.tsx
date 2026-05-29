@@ -1,50 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useRouter, type Href } from 'expo-router';
 
 import { ScreenContainer } from '@/src/components/ui/ScreenContainer';
 import { SectionHeader } from '@/src/components/ui/SectionHeader';
 import { theme } from '@/src/theme';
-
-type Module = {
-  id: string;
-  title: string;
-  description: string;
-  status: string;
-};
-
-const modules: Module[] = [
-  {
-    id: '1',
-    title: 'Oltalama Saldırıları',
-    description: 'Sahte e-posta ve web sitelerini tanıma, phishing tekniklerine karşı farkındalık.',
-    status: 'Yakında',
-  },
-  {
-    id: '2',
-    title: 'Parola Güvenliği',
-    description: 'Güçlü parola oluşturma, parola yöneticileri ve çok faktörlü doğrulama.',
-    status: 'Yakında',
-  },
-  {
-    id: '3',
-    title: 'Sosyal Mühendislik',
-    description: 'Manipülasyon tekniklerini anlama ve sosyal mühendislik saldırılarına karşı korunma.',
-    status: 'Yakında',
-  },
-  {
-    id: '4',
-    title: 'Güvenli Bağlantılar',
-    description: 'HTTPS, güvenli Wi-Fi kullanımı ve bağlantı güvenliği temelleri.',
-    status: 'Yakında',
-  },
-  {
-    id: '5',
-    title: 'Mobil Uygulama İzinleri',
-    description: 'Uygulama izinlerini yönetme ve gereksiz erişim haklarını sınırlandırma.',
-    status: 'Yakında',
-  },
-];
+import { educationModules } from '@/src/features/education';
 
 export default function TrainingsScreen() {
+  const router = useRouter();
+
   return (
     <ScreenContainer contentContainerStyle={styles.container} scroll>
       <SectionHeader
@@ -54,16 +18,32 @@ export default function TrainingsScreen() {
       />
 
       <View style={styles.list}>
-        {modules.map((module) => (
-          <View key={module.id} style={styles.card}>
+        {educationModules.map((module) => (
+          <Pressable
+            key={module.id}
+            accessibilityRole="button"
+            onPress={() =>
+              router.push(`/modules/${module.id}` as Href)
+            }
+            style={({ pressed }) => [
+              styles.card,
+              pressed && styles.cardPressed,
+            ]}>
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>{module.title}</Text>
               <View style={styles.badge}>
-                <Text style={styles.badgeText}>{module.status}</Text>
+                <Text style={styles.badgeText}>
+                  {module.level === 'beginner' ? 'Başlangıç' : 'Orta'}
+                </Text>
               </View>
             </View>
             <Text style={styles.cardDescription}>{module.description}</Text>
-          </View>
+            <View style={styles.cardMeta}>
+              <Text style={styles.metaText}>{module.durationMinutes} dk</Text>
+              <Text style={styles.metaDot}>•</Text>
+              <Text style={styles.metaText}>{module.quiz.length} soru</Text>
+            </View>
+          </Pressable>
         ))}
       </View>
     </ScreenContainer>
@@ -90,6 +70,9 @@ const styles = StyleSheet.create({
     padding: theme.spacing.lg,
     gap: theme.spacing.sm,
   },
+  cardPressed: {
+    opacity: 0.8,
+  },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -104,6 +87,20 @@ const styles = StyleSheet.create({
   cardDescription: {
     color: theme.colors.textSecondary,
     ...theme.typography.body,
+  },
+  cardMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.sm,
+    marginTop: theme.spacing.xs,
+  },
+  metaText: {
+    color: theme.colors.textTertiary,
+    ...theme.typography.caption,
+  },
+  metaDot: {
+    color: theme.colors.textTertiary,
+    ...theme.typography.caption,
   },
   badge: {
     backgroundColor: theme.colors.background,
