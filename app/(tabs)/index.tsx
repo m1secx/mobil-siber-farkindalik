@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
+import { Button } from '@/src/components/ui/Button';
+import { Card } from '@/src/components/ui/Card';
 import { ScreenContainer } from '@/src/components/ui/ScreenContainer';
 import { SectionHeader } from '@/src/components/ui/SectionHeader';
 import { useAuth } from '@/src/providers/auth-provider';
@@ -30,20 +32,35 @@ export default function HomeScreen() {
       />
 
       <View style={styles.content}>
-        <Text style={styles.description}>
-          Giriş yapmış kullanıcı alanı için sade başlangıç ekranı.
-        </Text>
-        <Text style={styles.metaText}>{user?.email ?? 'Email bilgisi yok'}</Text>
-        {isSubmitting ? <Text style={styles.metaText}>Çıkış yapılıyor...</Text> : null}
-        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        <Card style={styles.card}>
+          <Text style={styles.cardTitle}>Hesap Özeti</Text>
+          <Text style={styles.description}>
+            Giriş yapmış kullanıcı alanı için sade başlangıç ekranı.
+          </Text>
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Email</Text>
+            <Text style={styles.infoValue}>{user?.email ?? 'Email bilgisi yok'}</Text>
+          </View>
+          {isSubmitting ? <Text style={styles.metaText}>Çıkış yapılıyor...</Text> : null}
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        </Card>
+
+        <Card style={styles.card}>
+          <Text style={styles.cardTitle}>Bugünkü Öneri</Text>
+          <Text style={styles.description}>
+            Eğitimler sekmesinden kısa modülleri inceleyerek güvenli parola ve oltalama farkındalığı
+            konularına hızlıca göz atın.
+          </Text>
+        </Card>
       </View>
 
-      <Pressable
+      <Button
         disabled={isSubmitting}
+        loading={isSubmitting}
         onPress={handleSignOut}
-        style={({ pressed }) => [styles.button, (pressed || isSubmitting) && styles.buttonPressed]}>
-        <Text style={styles.buttonText}>{isSubmitting ? 'Bekleyin...' : 'Çıkış Yap'}</Text>
-      </Pressable>
+        style={styles.button}
+        text="Çıkış Yap"
+      />
     </ScreenContainer>
   );
 }
@@ -60,8 +77,26 @@ const styles = StyleSheet.create({
   content: {
     gap: theme.spacing.md,
   },
+  card: {
+    gap: theme.spacing.md,
+  },
+  cardTitle: {
+    color: theme.colors.textPrimary,
+    ...theme.typography.body,
+  },
   description: {
     color: theme.colors.textSecondary,
+    ...theme.typography.body,
+  },
+  infoRow: {
+    gap: theme.spacing.xs,
+  },
+  infoLabel: {
+    color: theme.colors.textTertiary,
+    ...theme.typography.caption,
+  },
+  infoValue: {
+    color: theme.colors.textPrimary,
     ...theme.typography.body,
   },
   metaText: {
@@ -74,17 +109,5 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: theme.spacing.xl,
-    minHeight: 52,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.primary,
-  },
-  buttonPressed: {
-    opacity: 0.85,
-  },
-  buttonText: {
-    color: theme.colors.surface,
-    ...theme.typography.button,
   },
 });
