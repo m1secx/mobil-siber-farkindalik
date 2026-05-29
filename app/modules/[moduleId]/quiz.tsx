@@ -108,7 +108,7 @@ export default function QuizScreen() {
               return answers[q.id] === q.correctOptionId ? count + 1 : count;
             }, 0);
             router.push(
-              `/modules/${module.id}/result?score=${score}&total=${module.quiz.length}` as Href
+              `/modules/${module.id}/result?score=${score}&total=${module.quiz.length}&answers=${encodeURIComponent(JSON.stringify(answers))}` as Href
             );
           }}
         />
