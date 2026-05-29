@@ -6,25 +6,25 @@
 - Sprint 3 tamamlandı
 - Sprint 4 tamamlandı
 - Sprint 5 tamamlandı
-- Sprint 6 tamamlandı
+- Sprint 6 tamamlandı: Gerçekçi Senaryo ve Video Destekli Eğitim Deneyimi
 
 ## Current Product State
 - Light theme ve ortak UI foundation aktif: `ScreenContainer`, `SectionHeader`, `Button`, `Input`, `Card`
 - Auth akışı çalışıyor; Login/Register alan bazlı validation UX var
 - Education modülleri merkezi `src/features/education` datasından geliyor
-- Module detail, quiz, result, scenario ve scenario-result akışları mevcut
-- Quiz review ve mailbox phishing scenario akışları lokal çalışıyor
-- `phishing-awareness` modülünde video placeholder/card var
+- `phishing-awareness` için mailbox scenario akışı mevcut
+- Kullanıcı 5 e-posta arasından seçim yapabiliyor
+- Scenario result ekranında doğru/yanlış, doğru phishing mail ve göstergeler gösteriliyor
+- Video metadata ve placeholder/card desteği mevcut
 
 ## Current Goal
 - Sprint 7 kapsamını netleştirmek
 
 ## Do Not Touch Without Explicit Task
-- `Supabase` client ve auth/session akışı
-- Route protection mantığı
-- Backend scoring, progress ve leaderboard kararları
-- `package.json` ve bağımlılıklar
+- `Supabase`, auth/session ve route protection akışı
+- Backend scoring
+- Leaderboard
+- Package ekleme
 
 ## Next
-- Kalıcı progress/score modeli ve Supabase tablo tasarımını planla
-- Backend scoring ve leaderboard kapsamını ayır
+- Sonraki aşamada kalıcı progress/score, Supabase modeli ve leaderboard değerlendirilecek
