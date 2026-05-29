@@ -1,34 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { type Href, useRouter } from 'expo-router';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { Card } from '@/src/components/ui/Card';
 import { ScreenContainer } from '@/src/components/ui/ScreenContainer';
 import { SectionHeader } from '@/src/components/ui/SectionHeader';
+import { educationModules } from '@/src/features/education/modules';
 import { theme } from '@/src/theme';
 
-const modules = [
-  {
-    title: 'Oltalama Saldırıları',
-    description: 'Şüpheli mesajları, sahte bağlantıları ve kimlik avı işaretlerini tanımayı öğrenin.',
-  },
-  {
-    title: 'Parola Güvenliği',
-    description: 'Güçlü parola oluşturma, parola tekrarını önleme ve hesap koruma temellerini keşfedin.',
-  },
-  {
-    title: 'Sosyal Mühendislik',
-    description: 'Manipülasyon tekniklerini fark ederek günlük iletişimde daha dikkatli karar verin.',
-  },
-  {
-    title: 'Güvenli Bağlantılar',
-    description: 'Ortak ağlarda, bağlantı paylaşımlarında ve tarayıcı kullanımında güvenli adımları öğrenin.',
-  },
-  {
-    title: 'Mobil Uygulama İzinleri',
-    description: 'Uygulamaların istediği izinleri değerlendirip gereksiz erişimleri sınırlamayı öğrenin.',
-  },
-] as const;
+const difficultyLabels = {
+  beginner: 'Başlangıç',
+  intermediate: 'Orta',
+} as const;
 
 export default function TrainingsScreen() {
+  const router = useRouter();
+
   return (
     <ScreenContainer
       contentContainerStyle={styles.container}
@@ -41,16 +27,26 @@ export default function TrainingsScreen() {
       />
 
       <View style={styles.content}>
-        {modules.map((module) => (
-          <Card key={module.title} style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>{module.title}</Text>
-              <View style={styles.badge}>
-                <Text style={styles.badgeText}>Yakında</Text>
+        {educationModules.map((module) => (
+          <Pressable
+            key={module.id}
+            onPress={() => router.push(`/modules/${module.id}` as Href)}
+            style={({ pressed }) => [styles.pressable, pressed && styles.pressablePressed]}>
+            <Card style={styles.card}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.cardTitle}>{module.title}</Text>
+                <View style={styles.badge}>
+                  <Text style={styles.badgeText}>{difficultyLabels[module.difficulty]}</Text>
+                </View>
               </View>
-            </View>
-            <Text style={styles.cardDescription}>{module.description}</Text>
-          </Card>
+              <Text style={styles.cardDescription}>{module.description}</Text>
+              <View style={styles.metaRow}>
+                <Text style={styles.metaText}>{module.durationMinutes} dk</Text>
+                <Text style={styles.metaDot}>•</Text>
+                <Text style={styles.metaText}>{module.quizQuestions.length} soru</Text>
+              </View>
+            </Card>
+          </Pressable>
         ))}
       </View>
     </ScreenContainer>
@@ -68,6 +64,12 @@ const styles = StyleSheet.create({
   },
   content: {
     gap: theme.spacing.md,
+  },
+  pressable: {
+    borderRadius: 12,
+  },
+  pressablePressed: {
+    opacity: 0.9,
   },
   card: {
     gap: theme.spacing.md,
@@ -96,5 +98,19 @@ const styles = StyleSheet.create({
   cardDescription: {
     color: theme.colors.textSecondary,
     ...theme.typography.body,
+  },
+  metaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: theme.spacing.sm,
+  },
+  metaText: {
+    color: theme.colors.textTertiary,
+    ...theme.typography.caption,
+  },
+  metaDot: {
+    color: theme.colors.textTertiary,
+    ...theme.typography.caption,
   },
 });
