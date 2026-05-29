@@ -43,6 +43,13 @@ export const educationModules: EducationModule[] = [
           'Güvenli web siteleri HTTPS protokolü kullanır ve tarayıcı adres çubuğunda kilit simgesi gösterir. Bu, site ile aranızdaki bağlantının şifrelendiğini ve verilerinizin güvende olduğunu gösterir.',
       },
     ],
+    video: {
+      title: 'Kimlik Avı (Phishing) Nedir?',
+      youtubeVideoId: 'dQw4w9WgXcQ',
+      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      description:
+        'Bu videoda kimlik avı saldırılarının nasıl çalıştığını, yaygın tekniklerini ve kendinizi nasıl koruyacağınızı öğreneceksiniz.',
+    },
   },
   {
     id: 'strong-passwords',

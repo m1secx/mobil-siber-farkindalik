@@ -1,23 +1,29 @@
 # Current State
 
-## Tamamlananlar
-- Sprint 1 tamamlandı
-- Expo proje iskeleti hazır
-- TypeScript yapılandırması hazır
-- Expo Router kurulu
-- app/, src/, supabase/ klasör yapısı hazır
-- Supabase client temeli eklendi
-- placeholder ekranlar hazır
+## Branch
+- kimi/sprint-3-ui
 
-- Sprint 2 tamamlandı
-- Supabase Auth entegrasyonu kuruldu
-- AuthProvider eklendi
-- login/register ekranları eklendi
-- session yönetimi eklendi
-- auth ve protected route ayrımı kuruldu
-- signOut akışı eklendi
-- session persistence çalışıyor
-- `npx tsc --noEmit` temiz geçti
+## Tamamlananlar
+- Sprint 1-5 tamamlandı
+- Education merkezi data/type yapısı (5 modül, quiz, sonuç ekranı)
+- Auth (login/register, session, protected routes)
+- Tab navigation (Home, Education, Profile)
+- Module detail → Quiz → Result akışı
+- Quiz review (soru bazlı cevap incelemesi)
+
+- Sprint 6 tamamlandı
+- Scenario data/type altyapısı (`src/features/scenarios/`)
+- Phishing mailbox scenario datası (5 e-posta, 1 phishing)
+- `receivedAt` zaman bilgisi
+- Modül detayında video card (phishing modülünde örnek)
+- Modül detayında "Senaryoyu Başlat" butonu
+- Mailbox simulation ekranı (`scenario.tsx`)
+- Scenario-result feedback ekranı (`scenario-result.tsx`)
+
+## Kapsam Dışı / Henüz Yok
+- Backend scoring
+- Supabase progress kaydı
+- Leaderboard
 
 ## Sıradaki En Küçük Adım
-- login/register UX ve hata akışını iyileştirmek
+- Sprint 7 planlaması veya yeni özellik kararı

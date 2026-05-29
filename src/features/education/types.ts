@@ -13,6 +13,13 @@ export interface QuizQuestion {
   explanation: string;
 }
 
+export interface EducationModuleVideo {
+  title: string;
+  youtubeVideoId?: string;
+  youtubeUrl?: string;
+  description: string;
+}
+
 export interface EducationModule {
   id: string;
   title: string;
@@ -21,4 +28,5 @@ export interface EducationModule {
   durationMinutes: number;
   content: string[];
   quiz: QuizQuestion[];
+  video?: EducationModuleVideo;
 }

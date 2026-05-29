@@ -51,7 +51,28 @@ export default function ModuleDetailScreen() {
         ))}
       </View>
 
-      <View style={styles.quizSection}>
+      {module.video && (
+        <View style={styles.videoCard}>
+          <Text style={styles.videoTitle}>Video Destekli Eğitim</Text>
+          <Text style={styles.videoName}>{module.video.title}</Text>
+          <Text style={styles.videoDescription}>
+            {module.video.description}
+          </Text>
+          <Text style={styles.videoHint}>
+            YouTube üzerinden izlenebilir
+          </Text>
+        </View>
+      )}
+
+      <View style={styles.actions}>
+        {module.id === 'phishing-awareness' && (
+          <Button
+            text="Senaryoyu Başlat"
+            onPress={() =>
+              router.push(`/modules/${module.id}/scenario` as Href)
+            }
+          />
+        )}
         <Button
           text="Quiz'e Başla"
           onPress={() =>
@@ -101,14 +122,36 @@ const styles = StyleSheet.create({
     ...theme.typography.body,
     lineHeight: 24,
   },
-  quizSection: {
+  videoCard: {
+    backgroundColor: theme.colors.surface,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    padding: theme.spacing.lg,
     gap: theme.spacing.sm,
-    marginTop: 'auto',
+    marginBottom: theme.spacing.xl,
   },
-  quizHint: {
+  videoTitle: {
+    color: theme.colors.textPrimary,
+    ...theme.typography.subtitle,
+  },
+  videoName: {
+    color: theme.colors.textSecondary,
+    ...theme.typography.body,
+  },
+  videoDescription: {
+    color: theme.colors.textSecondary,
+    ...theme.typography.caption,
+    lineHeight: 20,
+  },
+  videoHint: {
     color: theme.colors.textTertiary,
     ...theme.typography.caption,
-    textAlign: 'center',
+    marginTop: theme.spacing.xs,
+  },
+  actions: {
+    gap: theme.spacing.sm,
+    marginTop: 'auto',
   },
   errorContent: {
     flex: 1,
