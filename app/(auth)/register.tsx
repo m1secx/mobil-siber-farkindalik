@@ -9,10 +9,14 @@ import { SectionHeader } from '@/src/components/ui/SectionHeader';
 import { useAuth } from '@/src/providers/auth-provider';
 import { theme } from '@/src/theme';
 
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function RegisterScreen() {
   const { isConfigured, signUp } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,46 +24,51 @@ export default function RegisterScreen() {
 
   const handleEmailChange = (value: string) => {
     setEmail(value);
+    setEmailError(null);
     setError(null);
     setSuccess(null);
   };
 
   const handlePasswordChange = (value: string) => {
     setPassword(value);
+    setPasswordError(null);
     setError(null);
     setSuccess(null);
   };
 
-  const getValidationMessage = () => {
-    if (!email.trim() && !password) {
-      return 'Email ve şifre alanlarını doldurun.';
-    }
+  const validateForm = () => {
+    let nextEmailError: string | null = null;
+    let nextPasswordError: string | null = null;
 
     if (!email.trim()) {
-      return 'Email alanını doldurun.';
+      nextEmailError = 'Email alanını doldurun.';
+    } else if (!emailPattern.test(email.trim())) {
+      nextEmailError = 'Geçerli bir email adresi girin.';
     }
 
     if (!password) {
-      return 'Şifre alanını doldurun.';
+      nextPasswordError = 'Şifre alanını doldurun.';
+    } else if (password.length < 6) {
+      nextPasswordError = 'Şifre en az 6 karakter olmalıdır.';
     }
 
-    return null;
+    setEmailError(nextEmailError);
+    setPasswordError(nextPasswordError);
+
+    return !nextEmailError && !nextPasswordError;
   };
 
   const handleRegister = async () => {
-    const validationMessage = getValidationMessage();
+    setSuccess(null);
+    setError(null);
 
-    if (validationMessage) {
-      setSuccess(null);
-      setError(validationMessage);
+    if (!validateForm()) {
       return;
     }
 
     setIsSubmitting(true);
-    setError(null);
-    setSuccess(null);
 
-    const nextError = await signUp(email, password);
+    const nextError = await signUp(email.trim(), password);
 
     if (nextError) {
       setError(nextError);
@@ -89,6 +98,7 @@ export default function RegisterScreen() {
 
         <Input
           autoCapitalize="none"
+          error={emailError ?? undefined}
           keyboardType="email-address"
           label="Email"
           onChangeText={handleEmailChange}
@@ -97,6 +107,7 @@ export default function RegisterScreen() {
         />
         <Input
           autoCapitalize="none"
+          error={passwordError ?? undefined}
           label="Şifre"
           onChangeText={handlePasswordChange}
           placeholder="Şifrenizi oluşturun"
